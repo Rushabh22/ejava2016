@@ -1,6 +1,7 @@
 
 package week3.controller;
 
+import java.util.UUID;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -27,6 +28,7 @@ public class PeopleController extends HttpServlet{
       People  people = new People();
       people.setName(name);
       people.setEmail(email);
+      people.setPid(UUID.randomUUID().toString().substring(0, 8));
       
       peopleBean.addUser(people);
       

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class People implements Serializable{
 
     @Id
-    private Long pid;
+    private String pid;
    
     private String name;
     
@@ -38,11 +38,11 @@ public class People implements Serializable{
         this.email = email;
     }
 
-    public Long getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Long pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 
