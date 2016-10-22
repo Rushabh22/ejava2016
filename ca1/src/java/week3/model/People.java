@@ -7,10 +7,15 @@ package week3.model;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+@NamedQuery(name = "People.findByEmailId", 
+		query = "select p from People p where p.email = :email")
 @Table(name = "people")
 @Entity
 public class People implements Serializable{
@@ -21,6 +26,9 @@ public class People implements Serializable{
     private String name;
     
     private String email;
+    
+    @OneToMany(mappedBy = "people")
+    private Collection<Appointment> appointments;
 
     public String getName() {
         return name;
@@ -46,8 +54,12 @@ public class People implements Serializable{
         this.pid = pid;
     }
 
+    public Collection<Appointment> getAppointments() {
+        return appointments;
+    }
 
-    
-    
+    public void setAppointments(Collection<Appointment> appointments) {
+        this.appointments = appointments;
+    }   
     
 }
