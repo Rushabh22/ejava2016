@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 
+@NamedQuery(name = "Appointment.findAppointmentsByEmailId", 
+		query = "select ap.appointmentId, ap.appt_date, ap.description, p.pid from People p join Appointment ap where p.email = :email")
 @Entity
 public class Appointment implements Serializable{
     

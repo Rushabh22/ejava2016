@@ -8,6 +8,8 @@ package week3.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -30,6 +32,14 @@ public class People implements Serializable{
     @OneToMany(mappedBy = "people")
     private Collection<Appointment> appointments;
 
+    public JsonObject toJSON() {
+            return  (Json.createObjectBuilder()
+                                .add("pid", pid)
+				.add("name", name)
+				.add("email", email)
+				.build());  
+	}
+    
     public String getName() {
         return name;
     }

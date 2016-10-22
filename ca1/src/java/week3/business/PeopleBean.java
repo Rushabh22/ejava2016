@@ -36,8 +36,19 @@ public class PeopleBean {
         TypedQuery<People> query = em.createNamedQuery(
                             "People.findByEmailId", People.class);
         query.setParameter("email", email);
-        return Optional.of(query.getSingleResult());
-        
+        List<People> pplList = query.getResultList();
+        if(pplList != null && pplList.size() > 0){
+            return Optional.of(pplList.get(0));
+        }else{
+            return Optional.empty();
+        }
+             
+    }
+
+    public List<Object> findAppointments(String email) {
+       TypedQuery<Object> query = em.createNamedQuery("Appointment.findAppointmentsByEmailId", Object.class);
+       query.setParameter("email", email);
+       return query.getResultList();
     }
     
 }
