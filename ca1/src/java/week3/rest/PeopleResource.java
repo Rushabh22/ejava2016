@@ -32,13 +32,15 @@ public class PeopleResource {
             
               // check if person already exisits with same email
             Optional<People> opt = peopleBean.findPersonByEmail(email);
-            People existingPerson = opt.get();
-            if(existingPerson != null){
-                System.out.println("Person already exists..");
+            if(opt.isPresent()){
+                People existingPerson = opt.get();
+                if(existingPerson != null){
+                    System.out.println("Person already exists..");
 
-                return (Response.status(Response.Status.OK)
-				.entity("Person already exists with email:" + email)
-				.build());
+                    return (Response.status(Response.Status.OK)
+                                    .entity("Person already exists with email: " + email)
+                                    .build());
+                }
             }
 
             People  people = new People();
