@@ -1,7 +1,7 @@
 package week3.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,22 +10,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-
-@NamedQuery(name = "Appointment.findAppointmentsByEmailId", 
-		query = "select ap.appointmentId, ap.appt_date, ap.description, p.pid from People p join Appointment ap where p.email = :email")
+@NamedQuery(name = "Appointment.findAppointmentsByEmailId",
+        query = "select ap.appointmentId, ap.appt_date, ap.description, p.pid from People p inner join p.appointments ap where p.email like :email")
 @Entity
-public class Appointment implements Serializable{
-    
-    @Column(name = "appt_id") 
-    @Id 
+public class Appointment implements Serializable {
+
+    @Column(name = "appt_id")
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer appointmentId;
-    
+
     private String description;
-    
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date appt_date;
-    
+
     @ManyToOne
     @JoinColumn(name = "pid", referencedColumnName = "pid")
     private People people;
@@ -61,6 +63,5 @@ public class Appointment implements Serializable{
     public void setPeople(People people) {
         this.people = people;
     }
-    
-    
+
 }
