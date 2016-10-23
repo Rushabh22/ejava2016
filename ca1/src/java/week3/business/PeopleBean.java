@@ -15,40 +15,42 @@ import week3.model.People;
 
 @Stateless
 public class PeopleBean {
-    
-    @PersistenceContext(unitName = "week03_ca1") 
-     private EntityManager em;
-    
+
+    @PersistenceContext(unitName = "week03_ca1")
+    private EntityManager em;
+
     /**
      * addUser - method to add new people to people table
-     * @param people  - People Object to persist
+     *
+     * @param people - People Object to persist
      */
-    public void addUser(People  people){
-        em.persist(people);   
-    }
-    
-    /**
-     * Finds person by Email address
-     * @param email
-     * @return 
-     */
-    public Optional<People> findPersonByEmail(String email){
-        TypedQuery<People> query = em.createNamedQuery(
-                            "People.findByEmailId", People.class);
-        query.setParameter("email", email);
-        List<People> pplList = query.getResultList();
-        if(pplList != null && pplList.size() > 0){
-            return Optional.of(pplList.get(0));
-        }else{
-            return Optional.empty();
-        }
-             
+    public void addUser(People people) {
+        em.persist(people);
     }
 
-    public List<Object> findAppointments(String email) {
-       TypedQuery<Object> query = em.createNamedQuery("Appointment.findAppointmentsByEmailId", Object.class);
-       query.setParameter("email", email);
-       return query.getResultList();
+    /**
+     * Finds person by Email address
+     *
+     * @param email
+     * @return
+     */
+    public Optional<People> findPersonByEmail(String email) {
+        TypedQuery<People> query = em.createNamedQuery(
+                "People.findByEmailId", People.class);
+        query.setParameter("email", email);
+        List<People> pplList = query.getResultList();
+        if (pplList != null && pplList.size() > 0) {
+            return Optional.of(pplList.get(0));
+        } else {
+            return Optional.empty();
+        }
+
     }
-    
+
+    public List<Object[]> findAppointments(String email) {
+        TypedQuery<Object[]> query = em.createNamedQuery("Appointment.findAppointmentsByEmailId", Object[].class);
+        query.setParameter("email", email);
+        return query.getResultList();
+    }
+
 }
