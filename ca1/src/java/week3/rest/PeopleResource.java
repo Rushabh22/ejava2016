@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -28,28 +30,23 @@ public class PeopleResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createPerson( @FormParam("name") String name, @FormParam("email") String email ) {
-            System.out.println(String.format(" Person >> name: %s, email: %s", name, email));
-            
+            System.out.println(String.format(" Person >> name: %s, email: %s", name, email));           
               // check if person already exisits with same email
             Optional<People> opt = peopleBean.findPersonByEmail(email);
             if(opt.isPresent()){
                 People existingPerson = opt.get();
                 if(existingPerson != null){
                     System.out.println("Person already exists..");
-
-                    return (Response.status(Response.Status.OK)
-                                    .entity("Person already exists with email: " + email)
-                                    .build());
+                   return (Response.status(Response.Status.CONFLICT).
+                           entity("Person already exists with email: " + email).build());
                 }
             }
 
             People  people = new People();
             people.setName(name);
             people.setEmail(email);
-            people.setPid(UUID.randomUUID().toString().substring(0, 8));
-      
+            people.setPid(UUID.randomUUID().toString().substring(0, 8));      
             peopleBean.addUser(people);
-
             return (Response.status(Response.Status.CREATED)
                             .build());
     }
