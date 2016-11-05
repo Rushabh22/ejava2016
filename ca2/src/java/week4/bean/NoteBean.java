@@ -21,10 +21,10 @@ import week4.model.Note;
 @ManagedBean(name="noteBean")
 @SessionScoped
 public class NoteBean implements Serializable {
+  private static final long serialVersionUID = 1l;
   private String title;
-  private String category;
-  private List<String> categories;
-  private String content;  
+  private String category = "Social";
+  private String content; 
 
   @Inject NoteService noteService;
     public String getTitle() {
@@ -41,14 +41,6 @@ public class NoteBean implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public List<String> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<String> categories) {
-        this.categories = categories;
     }
 
     public String getContent() {
