@@ -14,9 +14,12 @@
                 <f:selectItems value="#{noteBean.categories}">
                 </f:selectItems>
             </h:selectOneMenu><br/>
-            Content: <h:
-            
-        </h:form>
+            Content: <h:inputText value="#{noteBean.content}"/><br/>
+            <h:commandButton value="Create Note" action="#{noteBean.createNote()}"/>
+            <h:commandLink action="index">
+                Back to Main
+            </h:commandLink>
+         </h:form>
     </h:body>
 </html>
 
