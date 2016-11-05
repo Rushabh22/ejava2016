@@ -6,9 +6,13 @@
 package week4.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
+import week4.business.NoteService;
+import week4.model.Note;
 
 /**
  *
@@ -21,6 +25,47 @@ public class NoteBean implements Serializable {
   private String category;
   private List<String> categories;
   private String content;  
-  
+
+  @Inject NoteService noteService;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
+    public void createNote() {
+        Note note = new Note();
+        note.setCategory(category);
+        note.setContent(content);
+        note.setTitle(title);
+        note.setCreated_date(new Date());
+        noteService.saveNote(note);
+    }
   
 }
