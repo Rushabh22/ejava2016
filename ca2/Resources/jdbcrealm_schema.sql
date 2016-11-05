@@ -19,12 +19,17 @@ create table groups (
 create table notes (
 	
 	note_id int not null auto_increment primary key, 
+	
 	userid varchar(32) not null,
-	title varchar(100) not null,
-	category varchar(50) not null,
+	
+	category varchar(128) not null,
+
 	content mediumtext not null,
+  
 	created_date datetime not null,
+  
 	constraint fk_userid foreign key (userid) references users(userid)
+
 ) engine=InnoDB default charset=utf8;
 
 /*
