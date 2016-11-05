@@ -4,6 +4,10 @@ create database appointments;
 
 use appointments;
 
+
+drop table people;
+drop table appointment;
+
 create table people (
 	pid varchar(8) not null primary key,
 	name varchar(128) not null,

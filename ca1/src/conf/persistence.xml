@@ -3,6 +3,7 @@
   <persistence-unit name="week03_ca1" transaction-type="JTA">
     <jta-data-source>jdbc/appointments</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+    </properties>
   </persistence-unit>
 </persistence>
