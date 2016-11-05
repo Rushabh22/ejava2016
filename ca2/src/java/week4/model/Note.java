@@ -9,23 +9,23 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author user
- */
+
 @Entity
 @Table(name = "notes")
 public class Note implements Serializable {
+   
+    private static final long serialVersionUID = 1L;
+    
     @Id
     private Long note_id;
+
+    private String userid;
     
-    @ManyToOne
-    private String userId;
+     private String title;
     
     private String category;
     
@@ -42,13 +42,22 @@ public class Note implements Serializable {
         this.note_id = note_id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 
     public String getCategory() {
         return category;
@@ -73,6 +82,5 @@ public class Note implements Serializable {
     public void setCreated_date(Date created_date) {
         this.created_date = created_date;
     }
-    
-    
+       
 }
