@@ -10,7 +10,7 @@ import week4.model.Note;
 
 
 @Stateless
-public class NoteBean {
+public class NoteService {
     
     @PersistenceContext(unitName = "week04PU")
     private EntityManager em;
