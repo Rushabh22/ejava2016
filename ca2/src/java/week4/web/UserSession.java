@@ -25,17 +25,20 @@ public class UserSession implements Serializable {
 	}
 	public void setUserName(String n) { }
 
-	public void logout() {
-
+	public String logout() {
+                String result = "/index?faces-redirect=true";
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 		HttpServletRequest req = (HttpServletRequest)ctx.getRequest();
 		HttpServletResponse resp = (HttpServletResponse)ctx.getResponse();
 		try {
-		req.getRequestDispatcher("/logout")
-				.forward(req, resp);
-		} catch (IOException | ServletException ex) { ex.printStackTrace();}
+		req.logout();
+		} catch (ServletException ex) { 
+                result =  "/error?faces-redirect=true";   
+                }
+        
 		//FacesContext.getCurrentInstance().
-
+return result;
 	}
+
 	
 }
