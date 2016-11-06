@@ -8,6 +8,8 @@ package week4.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,7 +25,8 @@ public class Note implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    private Long note_id;
+    @GeneratedValue(strategy=IDENTITY)
+    private Integer note_id;
 
     private String userid;
     
@@ -36,11 +39,11 @@ public class Note implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_date;
 
-    public Long getNote_id() {
+    public Integer getNote_id() {
         return note_id;
     }
 
-    public void setNote_id(Long note_id) {
+    public void setNote_id(Integer note_id) {
         this.note_id = note_id;
     }
 
