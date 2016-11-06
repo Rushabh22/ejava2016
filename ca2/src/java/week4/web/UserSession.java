@@ -18,6 +18,7 @@ public class UserSession implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+        
 	@Inject private Principal user;
 
 	public String getUsername() {
@@ -37,8 +38,15 @@ public class UserSession implements Serializable {
                 }
         
 		//FacesContext.getCurrentInstance().
-return result;
+                return result;
 	}
+        
+        public String createNote() {
+           return null; 
+        }
+        public String listNote() {
+            return null;
+        }
 
 	
 }
