@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+       
+    </h:head>
+    <h:body>
+        <h1>Create Note</h1>
+        <h:form>
+            Title : <h:inputText value="#{noteBean.title}"/><br/>
+            Category : <h:selectOneMenu value="#{noteBean.category}">
+                <f:selectItem itemValue="Social" itemLabel="Social"/>
+                <f:selectItem itemValue="For Sale" itemLabel="For Sale"/>
+                <f:selectItem itemValue="Jobs" itemLabel="Jobs"/>
+                <f:selectItem itemValue="Tuition" itemLabel="Tuition"/>
+            </h:selectOneMenu><br/>
+            Content: <h:inputText value="#{noteBean.content}"/><br/>
+            <h:commandButton value="Create Note" action="#{noteBean.createNote()}"/>
+            <h:commandLink action="menu">
+                Back to Menu
+            </h:commandLink>
+         </h:form>
+    </h:body>
+</html>
+
