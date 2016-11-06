@@ -21,18 +21,6 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    <security-constraint>
-        <display-name>Constraint1</display-name>
-        <web-resource-collection>
-            <web-resource-name>WRCollection</web-resource-name>
-            <description/>
-            <url-pattern>/faces/secure/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>customer_role</role-name>
-        </auth-constraint>
-    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>authdb-realm</realm-name>
