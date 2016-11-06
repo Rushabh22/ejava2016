@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @NamedQuery(name = "Note.findNotesByCategory",
-        query = "select note.title, note.created_date, note.userid, note.category, note.content from Note note where note.category = :category")
+        query = "select notes.title, notes.created_date, notes.userid, notes.category, notes.content from Notes notes where notes.category = :category")
 @Entity
 @Table(name = "notes")
 public class Note implements Serializable {
