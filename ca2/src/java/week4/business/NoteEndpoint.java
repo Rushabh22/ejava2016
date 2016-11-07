@@ -20,21 +20,23 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/note/{category}")
 public class NoteEndpoint {
 
-    private static Map<String, Object> sessMap;
-
+    private static Map<String, Object> sessionMap;
+    private Session session;
+    
     @OnOpen
     public void open(Session session, @PathParam("category") String category) {
+        this.session = session;
         System.out.println(">>> Open session id : " + session.getId());
         System.out.println(">>> open > category : " + category);
-        if (sessMap == null) {
-            sessMap = session.getUserProperties();
+        if (sessionMap == null) {
+            sessionMap = session.getUserProperties();
         }
-        List<Session> sessions = (List<Session>) sessMap.get(category);
+        List<Session> sessions = (List<Session>) sessionMap.get(category);
         if (sessions == null) {
             sessions = Collections.synchronizedList(new ArrayList());
         }
         sessions.add(session);
-        sessMap.put(category, sessions);
+        sessionMap.put(category, sessions);
     }
 
     @OnMessage
@@ -45,30 +47,28 @@ public class NoteEndpoint {
                 .add("text", text)
                 .add("title", "title")
                 .add("time", (new Date()).toString())
-                .add("who", "Rushabh")
+                .add("who", "Who")
                 .add("category", category)
                 .add("content", "content")
                 .build()
                 .toString();
-
-        List<Session> sesions = (List<Session>) sessMap.get(category);
-        for (Session s : sesions) {
-            System.out.println("Message > Sessions : " + s.getId());
-            try {
-                s.getBasicRemote().sendText(msg);
-            } catch (IOException ex) {
-                try {
-                    s.close();
-                } catch (IOException e) {
-                }
-            }
+        List<Session> sessList;
+        if("All".equals(category)){
+            sessList = (List<Session>) sessionMap.get(category);
+            sessList.forEach((s) -> {
+                sendMessage(s, msg);
+            });
+        }else{           
+            session.getOpenSessions().forEach((s) -> {
+                sendMessage(s, msg);
+            });     
         }
     }
 
     @OnClose
     public void close(Session sess, @PathParam("category") String category) {
 
-        List<Session> sessions = (List<Session>) sessMap.get(category);
+        List<Session> sessions = (List<Session>) sessionMap.get(category);
         for (Session s : sessions) {
             if (sess.equals(s)) {
                 System.out.println(">>> Removed Session : " + s.getId());
@@ -76,7 +76,7 @@ public class NoteEndpoint {
                 break;
             }
         }
-        sessMap.put(category, sessions);
+        sessionMap.put(category, sessions);
     }
 
     @OnError
@@ -84,4 +84,15 @@ public class NoteEndpoint {
         System.out.println(">>> Websocket error : " + t.getMessage());
     }
 
+    private void sendMessage(Session s, String msg) {
+        System.out.println("Message > Sessions : " + s.getId());
+        try {
+            s.getBasicRemote().sendText(msg);
+        } catch (IOException ex) {
+            try {
+                s.close();
+            } catch (IOException e) {
+            }
+        }
+    }
 }
