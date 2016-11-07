@@ -20,9 +20,9 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/note/{category}")
 public class NoteEndpoint {
 
-	private static Map<String, Object> sessMap;
+    private static Map<String, Object> sessMap;
 
-	@OnOpen
+    @OnOpen
     public void open(Session session, @PathParam("category") String category) {
         System.out.println(">>> Open session id : " + session.getId());
         System.out.println(">>> open > category : " + category);
@@ -37,7 +37,7 @@ public class NoteEndpoint {
         sessMap.put(category, sessions);
     }
 
-	 @OnMessage
+    @OnMessage
     public void message(String text, @PathParam("category") String category) {
         System.out.println(">>> message : " + text);
         System.out.println(">>> message > category : " + category);
@@ -45,9 +45,9 @@ public class NoteEndpoint {
                 .add("text", text)
                 .add("title", "title")
                 .add("time", (new Date()).toString())
-                .add("who", "Rushabh")   
+                .add("who", "Rushabh")
                 .add("category", category)
-                .add("content", "content")                
+                .add("content", "content")
                 .build()
                 .toString();
 
@@ -64,8 +64,8 @@ public class NoteEndpoint {
             }
         }
     }
-    
-     @OnClose
+
+    @OnClose
     public void close(Session sess, @PathParam("category") String category) {
 
         List<Session> sessions = (List<Session>) sessMap.get(category);
@@ -78,10 +78,10 @@ public class NoteEndpoint {
         }
         sessMap.put(category, sessions);
     }
-    
-     @OnError
+
+    @OnError
     public void onError(Throwable t) {
-        System.out.println(">>> Websocket error : " +t.getMessage());
+        System.out.println(">>> Websocket error : " + t.getMessage());
     }
-    
+
 }
