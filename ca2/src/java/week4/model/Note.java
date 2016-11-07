@@ -7,6 +7,7 @@ package week4.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.json.Json;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -21,21 +22,21 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "notes")
 public class Note implements Serializable {
-   
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @GeneratedValue(strategy=IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Integer note_id;
 
     private String userid;
-    
-     private String title;
-    
+
+    private String title;
+
     private String category;
-    
+
     private String content;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_date;
 
@@ -63,7 +64,6 @@ public class Note implements Serializable {
         this.title = title;
     }
 
-
     public String getCategory() {
         return category;
     }
@@ -87,5 +87,18 @@ public class Note implements Serializable {
     public void setCreated_date(Date created_date) {
         this.created_date = created_date;
     }
-       
+
+    public String toJson() {
+        String msg = Json.createObjectBuilder()
+                .add("title", getTitle())
+                .add("time", getCreated_date().toString())
+                .add("who", getUserid())
+                .add("category", getCategory())
+                .add("content", getContent())
+                .build()
+                .toString();
+
+        return msg;
+    }
+
 }

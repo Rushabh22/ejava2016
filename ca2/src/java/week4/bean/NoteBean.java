@@ -64,5 +64,5 @@ public class NoteBean implements Serializable {
         noteService.saveNote(note);
         noteEndPoint.display(note);
     }
-  
+      
 }

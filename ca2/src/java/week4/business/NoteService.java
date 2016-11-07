@@ -14,9 +14,9 @@ public class NoteService {
     
     @PersistenceContext
     private EntityManager em;
-    
+          
     public void saveNote(Note note) {
-        em.persist(note);
+        em.persist(note);        
     }
     
     public List<Object[]> findNotesByCategory(String category) {

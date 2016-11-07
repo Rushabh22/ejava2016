@@ -41,18 +41,9 @@ public class NoteEndpoint {
     }
 
     @OnMessage
-    public void message(String text, @PathParam("category") String category) {
-        System.out.println(">>> message : " + text);
-        System.out.println(">>> message > category : " + category);
-        String msg = Json.createObjectBuilder()
-                .add("text", text)
-                .add("title", "title")
-                .add("time", (new Date()).toString())
-                .add("who", "Who")
-                .add("category", category)
-                .add("content", "content")
-                .build()
-                .toString();
+    public void message(String msg, @PathParam("category") String category) {
+        System.out.println(">>> message : " + msg);
+        System.out.println(">>> message > category : " + category);       
         List<Session> sessList;
         if("All".equals(category)){
             sessList = (List<Session>) sessionMap.get(category);
@@ -97,7 +88,7 @@ public class NoteEndpoint {
         }
     }
 
-    void display(Note note) {
-        message(note.toString(),note.getCategory());
+    public void display(Note note) {
+        message(note.toJson(),note.getCategory());
     }
 }
