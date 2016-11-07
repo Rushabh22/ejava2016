@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
 import javax.websocket.EndpointConfig;
@@ -15,7 +16,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@RequestScoped
+@Stateless
 @ServerEndpoint("/note/{category}")
 public class NoteEndpoint {
 
@@ -36,19 +37,31 @@ public class NoteEndpoint {
         sessMap.put(category, sessions);
     }
 
-	@OnMessage
-	public void message(String text) {
-		String msg = Json.createObjectBuilder()
-				.add("text", text)
-				.add("time", (new Date()).toString())
-				.build()
-				.toString();
+	 @OnMessage
+    public void message(String text, @PathParam("category") String category) {
+        System.out.println(">>> message : " + text);
+        System.out.println(">>> message > category : " + category);
+        String msg = Json.createObjectBuilder()
+                .add("text", text)
+                .add("title", "title")
+                .add("time", (new Date()).toString())
+                .add("who", "Rushabh")   
+                .add("category", category)
+                .add("content", "content")                
+                .build()
+                .toString();
 
-		for (Session s: session.getOpenSessions())
-			try {
-				s.getBasicRemote().sendText(msg);
-			} catch (IOException ex) {
-				try { s.close(); } catch (IOException e) {} 
-			}
-	}
+        List<Session> sesions = (List<Session>) sessMap.get(category);
+        for (Session s : sesions) {
+            System.out.println("Message > Sessions : " + s.getId());
+            try {
+                s.getBasicRemote().sendText(msg);
+            } catch (IOException ex) {
+                try {
+                    s.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+    }
 }
