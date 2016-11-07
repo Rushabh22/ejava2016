@@ -15,6 +15,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import week4.model.Note;
 
 @Stateless
 @ServerEndpoint("/note/{category}")
@@ -94,5 +95,9 @@ public class NoteEndpoint {
             } catch (IOException e) {
             }
         }
+    }
+
+    void display(Note note) {
+        message(note.toString(),note.getCategory());
     }
 }
