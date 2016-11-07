@@ -7,17 +7,18 @@
     </h:head>
     <h:body>
 		
-		Hello #{userSession.username}
-
+		Hello #{user.name}
+                 <br/>
+                 <h:link outcome="/index" value="Back to HomePage"/>
+                 <br/>
 		<h:form>
-                    <h:commandButton value="CreateNote" action="#{userSession.createNote()}"/>
+                    <h:commandButton value="CreateNote" action="#{user.createNote}"/>
                     <br/>
-                    <h:commandButton value="ListNote" action="#{userSession.listNote()}"/>
+                    <h:commandButton value="ListNote" action="#{user.listNote}"/>
                     <br/>
-		    <h:commandButton value="Logout" action="#{userSession.logout()}"/>
+		    <h:commandButton value="Logout" action="#{user.logout}"/>
                     <br/>
 		</h:form>
-
     </h:body>
 </html>
 
