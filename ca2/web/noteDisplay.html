@@ -6,11 +6,50 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+         <title>Notice Board</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">		
+
+        <script src="bower_components/jquery/dist/jquery.js"></script>       
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <textarea id="notes" cols="50" rows="10" disabled></textarea>
+
+        <br>
+        <input type="text" id="message" size="30">
+        <button type="button" id="sendBtn" >Send</button> <!--Test -->
+        <select id="category">
+            <option value="Social">Social</option>
+            <option value="For Sale">For Sale</option>
+            <option value="Jobs">Jobs</option>
+            <option value="Tuition">Tuition</option>
+        </select>
+        <input type="button" onclick="connectWebSocket()" value="Connect">
+        <script>
+            function connectWebSocket () {
+                var category = $("#category").val();
+                alert("Category : "+category);
+                var url = "ws://localhost:8080/ejava_wk4_websocket/chat/"+category;
+                var socket = new WebSocket(url);
+                socket.onopen = function () {
+                    $("#notes").val("Connected\n");
+                    $("#category").prop("disabled", true);
+                }
+                socket.onmessage = function (evt) {
+                    alert('onmessage called : '+evt.data);
+                    var data = JSON.parse(evt.data);
+                    $("#notes").val("Title:  " + data.title + "\n" 
+                           
+                            + $("#notes").val());
+                }
+                $("#sendBtn").on("click", function () {
+                    alert('sendBtn called ');
+                    socket.send($("#message").val())
+                    $("#message").val("")                  
+                })                
+            }            
+        </script>
     </body>
 </html>
