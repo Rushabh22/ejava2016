@@ -1,7 +1,11 @@
 package week4.business;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
 import javax.websocket.EndpointConfig;
@@ -15,13 +19,22 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/note/{category}")
 public class NoteEndpoint {
 
-	private Session session;
+	private static Map<String, Object> sessMap;
 
 	@OnOpen
-	public void open(Session sess,EndpointConfig config,@PathParam("category") String category) {
-		session = sess;
-		System.out.println(">>> session id: " + sess.getId());
-	}
+    public void open(Session session, @PathParam("category") String category) {
+        System.out.println(">>> Open session id : " + session.getId());
+        System.out.println(">>> open > category : " + category);
+        if (sessMap == null) {
+            sessMap = session.getUserProperties();
+        }
+        List<Session> sessions = (List<Session>) sessMap.get(category);
+        if (sessions == null) {
+            sessions = Collections.synchronizedList(new ArrayList());
+        }
+        sessions.add(session);
+        sessMap.put(category, sessions);
+    }
 
 	@OnMessage
 	public void message(String text) {
