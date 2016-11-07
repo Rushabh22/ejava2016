@@ -5,11 +5,8 @@
  */
 package week4.bean;
 
-import java.io.Serializable;
 import javax.annotation.Resource;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
