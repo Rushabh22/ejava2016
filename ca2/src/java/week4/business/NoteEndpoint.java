@@ -10,6 +10,8 @@ import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
 import javax.websocket.EndpointConfig;
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -64,4 +66,24 @@ public class NoteEndpoint {
             }
         }
     }
+    
+     @OnClose
+    public void close(Session sess, @PathParam("category") String category) {
+
+        List<Session> sessions = (List<Session>) sessMap.get(category);
+        for (Session s : sessions) {
+            if (sess.equals(s)) {
+                System.out.println(">>> Removed Session : " + s.getId());
+                sessions.remove(sess);
+                break;
+            }
+        }
+        sessMap.put(category, sessions);
+    }
+    
+     @OnError
+    public void onError(Throwable t) {
+        System.out.println(">>> Websocket error : " +t.getMessage());
+    }
+    
 }
