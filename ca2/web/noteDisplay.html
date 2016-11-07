@@ -31,12 +31,12 @@ and open the template in the editor.
         <script>
             function connectWebSocket () {
                 var category = $("#category").val();              
-                var url = "ws://localhost:8080/ejava_wk4_websocket/chat/"+category;
+                var url = "ws://localhost:8080/ejava_wk4_websocket/note/"+category;
                 var socket = new WebSocket(url);
                 socket.onopen = function () {
                     $("#notes").val("Connected\n");
                     $("#category").prop("disabled", true);
-                }
+                };
                 socket.onmessage = function (evt) {                   
                     var data = JSON.parse(evt.data);
                     $("#notes").val("Title:  " + data.title + "\n" 
@@ -45,11 +45,11 @@ and open the template in the editor.
                             + "Category :  " + data.category + "\n" 
                             + "Content :  " + data.content + "\n" + "\n" 
                             + $("#notes").val());
-                }
+                };
                 $("#sendBtn").on("click", function () {                  
-                    socket.send($("#message").val())
-                    $("#message").val("")                  
-                })                
+                    socket.send($("#message").val());
+                    $("#message").val("");               
+                });               
             }            
         </script>
     </body>
