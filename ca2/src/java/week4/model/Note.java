@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @NamedQuery(name = "Note.findNotesByCategory",
-        query = "select n.TITLE, n.CREATED_DATE, n.USERNAME, n.CATEGORY, n.CONTENT from Note n where n.CATEGORY = :category")
+        query = "select n.TITLE, n.CREATED_DATE, n.userid, n.CATEGORY, n.CONTENT from Note n where n.CATEGORY = :category")
 @Entity
 @Table(name = "NOTES")
 public class Note implements Serializable {
@@ -29,7 +29,7 @@ public class Note implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     private Integer NOTE_ID;
 
-    private String USERNAME;
+    private String userid;
 
     private String TITLE;
 
@@ -48,13 +48,14 @@ public class Note implements Serializable {
         this.NOTE_ID = NOTE_ID;
     }
 
-    public String getUSERNAME() {
-        return USERNAME;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUSERNAME(String USERNAME) {
-        this.USERNAME = USERNAME;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
+
 
     public String getTITLE() {
         return TITLE;
@@ -92,7 +93,7 @@ public class Note implements Serializable {
         String msg = Json.createObjectBuilder()
                 .add("title", getTITLE())
                 .add("time", getCREATED_DATE().toString())
-                .add("who", getUSERNAME())
+                .add("who", getUserid())
                 .add("category", getCATEGORY())
                 .add("content", getCONTENT())
                 .build()
