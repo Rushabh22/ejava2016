@@ -55,7 +55,7 @@ public class NoteBean implements Serializable {
         this.content = content;
     }
     
-    public void createNote() {
+    public void create() {
         Note note = new Note();
         note.setCategory(category);
         note.setContent(content);

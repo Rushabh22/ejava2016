@@ -40,13 +40,4 @@ public class User implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
                 return "/index";
 	}
-        
-        public String createNote() {
-           return null; 
-        }
-        public String listNote() {
-            return null;
-        }
-
-	
 }

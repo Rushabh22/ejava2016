@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Admin</title>
+    </h:head>
+    <h:body>
+        <h:link value="Go Home" outcome="/index" /><br />
+        <h1>Hello #{user.name}!</h1>
+		<br />
+		<h:link outcome="/index" value="Back to Homepage" />
+		<br /> <br />
+		<h2 style="bold">Add a user:</h2>
+		<h:form id="f">
+		  <h:panelGrid columns="3">
+			Username: <h:inputText id="username" value="#{newUserBean.username}" />
+			<h:message for="username" style="color:red" />
+			Password: <h:inputSecret id="password" value="#{newUserBean.password}" />
+			<h:message for="password" style="color:red" />
+			Email: <h:inputText id="email" value="#{newUserBean.email}" />
+			<h:message for="email" style="color:red" />
+		  </h:panelGrid>
+			User Type: <h:message for="usertype" style="color:red" /> <br />
+			<h:selectOneRadio id="usertype" required="true" value="#{newUserBean.usertype}">
+				<f:selectItem itemValue="user" itemLabel="user" />
+				<f:selectItem itemValue="admin" itemLabel="admin" />
+				<f:selectItem itemValue="user+admin" itemLabel="user+admin" />
+			</h:selectOneRadio>
+		  <h:commandButton value="Add a user" action="#{newUserBean.add}" />
+		</h:form>
+		<br /> <br />
+        <h:link value="Logout" outcome="/logout" />
+    </h:body>
+</html>
+

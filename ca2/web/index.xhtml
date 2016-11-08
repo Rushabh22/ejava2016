@@ -3,12 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>JDBC Realm</title>
+        <title>Form-based authentication using jdbcRealm</title>
     </h:head>
     <h:body>
-        <h:link outcome="admin/index" value="To the Admin Page"/><br/>
-        <h:link outcome="users/menu" value="To the user page"/><br/>
-        <h:link outcome="common/index" value="Anybody"/>
+        <h2 style="color: blue">
+            Form-based authentication using JAAS Context:jdbcRealm
+        </h2>
+        <h3>
+            admin pages for 'admingroup' users only <br />
+            student pages for 'studentgroup' users only
+        </h3>
+        Under 'admin' subfolder: <br />
+        <h:link value="Click here if you are an admin and wants ti create new users" outcome="admin/admin1" /> <br />
+        
+        <br />
+        Under 'student' subfolder: <br />
+        <h:link value="Click here to login as a User" outcome="student/menu" /> <br />
+        
     </h:body>
 </html>
 
