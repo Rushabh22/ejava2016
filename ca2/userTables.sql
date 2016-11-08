@@ -37,4 +37,14 @@ insert into user_groups (groupname,username) values ('usergroup','ankur');
 select * from users;
 select * from user_groups;
 
+create table notes(
+	note_id integer not null generated always as identity(start with 1,increment by 1), 	
+	username varchar(255),
+	title varchar(100),
+	category varchar(50),
+	content varchar(255),
+	created_date date,
+	primary key(note_id)
+);
+
 
