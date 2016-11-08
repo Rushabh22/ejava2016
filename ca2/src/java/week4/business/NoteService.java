@@ -12,7 +12,7 @@ import week4.model.Note;
 @Stateless
 public class NoteService {
     
-    @PersistenceContext
+    @PersistenceContext(unitName="jdbcRealmPU")
     private EntityManager em;
           
     public void saveNote(Note note) {

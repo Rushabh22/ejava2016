@@ -18,87 +18,88 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @NamedQuery(name = "Note.findNotesByCategory",
-        query = "select n.title, n.created_date, n.userid, n.category, n.content from Note n where n.category = :category")
+        query = "select n.TITLE, n.CREATED_DATE, n.USERNAME, n.CATEGORY, n.CONTENT from Note n where n.CATEGORY = :category")
 @Entity
-@Table(name = "notes")
+@Table(name = "NOTES")
 public class Note implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Integer note_id;
+    private Integer NOTE_ID;
 
-    private String userid;
+    private String USERNAME;
 
-    private String title;
+    private String TITLE;
 
-    private String category;
+    private String CATEGORY;
 
-    private String content;
+    private String CONTENT;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_date;
+    private Date CREATED_DATE;
 
-    public Integer getNote_id() {
-        return note_id;
+    public Integer getNOTE_ID() {
+        return NOTE_ID;
     }
 
-    public void setNote_id(Integer note_id) {
-        this.note_id = note_id;
+    public void setNOTE_ID(Integer NOTE_ID) {
+        this.NOTE_ID = NOTE_ID;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUSERNAME() {
+        return USERNAME;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUSERNAME(String USERNAME) {
+        this.USERNAME = USERNAME;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTITLE() {
+        return TITLE;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTITLE(String TITLE) {
+        this.TITLE = TITLE;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCATEGORY() {
+        return CATEGORY;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCATEGORY(String CATEGORY) {
+        this.CATEGORY = CATEGORY;
     }
 
-    public String getContent() {
-        return content;
+    public String getCONTENT() {
+        return CONTENT;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCONTENT(String CONTENT) {
+        this.CONTENT = CONTENT;
     }
 
-    public Date getCreated_date() {
-        return created_date;
+    public Date getCREATED_DATE() {
+        return CREATED_DATE;
     }
 
-    public void setCreated_date(Date created_date) {
-        this.created_date = created_date;
+    public void setCREATED_DATE(Date CREATED_DATE) {
+        this.CREATED_DATE = CREATED_DATE;
     }
 
     public String toJson() {
         String msg = Json.createObjectBuilder()
-                .add("title", getTitle())
-                .add("time", getCreated_date().toString())
-                .add("who", getUserid())
-                .add("category", getCategory())
-                .add("content", getContent())
+                .add("title", getTITLE())
+                .add("time", getCREATED_DATE().toString())
+                .add("who", getUSERNAME())
+                .add("category", getCATEGORY())
+                .add("content", getCONTENT())
                 .build()
                 .toString();
 
         return msg;
     }
-
+    
+    
 }

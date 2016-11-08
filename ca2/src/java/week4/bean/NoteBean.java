@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
-import week4.business.NoteEndpoint;
 import week4.business.NoteService;
 import week4.model.Note;
 
@@ -28,9 +27,6 @@ public class NoteBean implements Serializable {
 
   @Inject 
   NoteService noteService;
-  @Inject
-  private NoteEndpoint noteEndPoint;
-  
     public String getTitle() {
         return title;
     }
@@ -57,12 +53,13 @@ public class NoteBean implements Serializable {
     
     public void create() {
         Note note = new Note();
-        note.setCategory(category);
-        note.setContent(content);
-        note.setTitle(title);
-        note.setCreated_date(new Date());
+        note.setCATEGORY(category);
+        note.setCONTENT(content);
+        note.setTITLE(title);
+        note.setCREATED_DATE(new Date());
+        note.setUSERNAME("user1");
         noteService.saveNote(note);
-        noteEndPoint.display(note);
+        //noteEndPoint.display(note);
     }
       
 }

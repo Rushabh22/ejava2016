@@ -18,9 +18,7 @@
             </h:selectOneMenu><br/>
             Content: <h:inputText value="#{noteBean.content}"/><br/>
             <h:commandButton value="Create Note" action="#{noteBean.create}"/>
-            <h:commandLink action="menu">
-                Back to Menu
-            </h:commandLink>
+            <h:link value="Go to Menu" outcome="/student/menu"/> 
          </h:form>
     </h:body>
 </html>
