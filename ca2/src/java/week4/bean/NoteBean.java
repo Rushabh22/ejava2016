@@ -6,6 +6,7 @@
 package week4.bean;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,6 +19,9 @@ import week4.business.NoteEndpoint;
 @SessionScoped
 public class NoteBean implements Serializable {
   private static final long serialVersionUID = 1l;
+  
+  @Inject private Principal user;
+  
   private String title;
   private String category = "Social";
   private String content; 
@@ -58,7 +62,7 @@ public class NoteBean implements Serializable {
         note.setCONTENT(content);
         note.setTITLE(title);
         note.setCREATED_DATE(new Date());
-        note.setUSERNAME("user1");
+        note.setUserid(user.getName());
         noteService.saveNote(note);
         noteEndPoint.display(note);
     }
