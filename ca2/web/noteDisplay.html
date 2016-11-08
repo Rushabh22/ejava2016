@@ -13,25 +13,50 @@ and open the template in the editor.
         <script src="bower_components/jquery/dist/jquery.js"></script>       
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        
+        <style>
+            table, td, th {
+                border: 1px solid black;
+            }
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td {
+                height: 50px;
+                vertical-align: bottom;
+            }
+</style>
     </head>
     <body>
-        <textarea id="notes" cols="50" rows="10" disabled></textarea>
-
-        <br>
-        <input type="text" id="message" size="30">
-        <button type="button" id="sendBtn" >Send</button> <!--Test -->
-        <select id="category">
+        
+         Category:   <select id="category">
             <option value="Social">Social</option>
-            <option value="For Sale">For Sale</option>
+            <option value="Sale">Sale</option>
             <option value="Jobs">Jobs</option>
             <option value="Tuition">Tuition</option>
             <option value="All">All</option>
         </select>
         <input type="button" onclick="connectWebSocket()" value="Connect">
+        
+        
+              <br>
+                    <br>
+        
+       <table id="table" >
+        </table>
+        
+
+        <br>
+        <input type="text" id="message" size="30">
+        <button type="button" id="sendBtn" >Send</button> <!--Test -->
+     
         <script>
             function connectWebSocket () {
                 var category = $("#category").val();              
-                var url = "ws://localhost:8080/ejava_wk4_websocket/note/"+category;
+                var url = "ws://localhost:8080/ca2/note/"+category;
                 var socket = new WebSocket(url);
                 socket.onopen = function () {
                     $("#notes").val("Connected\n");
@@ -39,12 +64,23 @@ and open the template in the editor.
                 };
                 socket.onmessage = function (evt) {                   
                     var data = JSON.parse(evt.data);
-                    $("#notes").val("Title:  " + data.title + "\n" 
-                            + "Time :  " + data.time + "\n" 
-                            + "Who : " + data.who  + "\n" 
-                            + "Category :  " + data.category + "\n" 
-                            + "Content :  " + data.content + "\n" + "\n" 
-                            + $("#notes").val());
+                    $("#table").empty();    
+                    if(data){
+                        var len = data.length;
+                        var txt = "<tr><th>Title</th><th>Created Time</th><th>Created By</th> <th>Category</th>  <th>Content</th></tr>";
+                        if(len > 0){
+                            for(var i=0; i<len; i++){
+                                    txt += "<tr><td>"+data[i].title+"</td><td>"+new Date(data[i].time).toLocaleDateString() +"</td>"+
+                                           "<td>"+data[i].who+"</td><td>"+data[i].category+"</td>"+
+                                           "<td>"+data[i].content+"</td></tr>";
+                                
+                            }
+                            if(txt != ""){
+                                $("#table").append(txt);
+                            }
+                        }
+                    }
+                    
                 };
                 $("#sendBtn").on("click", function () {                  
                     socket.send($("#message").val());

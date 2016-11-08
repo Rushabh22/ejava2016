@@ -8,45 +8,58 @@ package week4.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.json.Json;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@NamedQueries({
 @NamedQuery(name = "Note.findNotesByCategory",
-        query = "select n.TITLE, n.CREATED_DATE, n.userid, n.CATEGORY, n.CONTENT from Note n where n.CATEGORY = :category")
+        query = "select n.title, n.created_date, n.userid, n.category, n.content from Note n where n.category = :category"),
+@NamedQuery(name = "Note.findAllNotes",
+        query = "select n.title, n.created_date, n.userid, n.category, n.content from Note n ")
+})
 @Entity
-@Table(name = "NOTES")
+@Table(name = "notes")
 public class Note implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Integer note_id;
-
+    @Column(name = "note_id")
+    private Integer noteId;
+    
+     @Column(name = "userid")
     private String userid;
 
+    @Column(name = "title")
     private String title;
-
+    
+    @Column(name = "category")
     private String category;
-
+    
+    @Column(name = "content")
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date")
     private Date created_date;
 
-    public Integer getNote_id() {
-        return note_id;
+    public Integer getNoteId() {
+        return noteId;
     }
 
-    public void setNote_id(Integer note_id) {
-        this.note_id = note_id;
+    public void setNoteId(Integer noteId) {
+        this.noteId = noteId;
     }
+
 
     public String getUserid() {
         return userid;

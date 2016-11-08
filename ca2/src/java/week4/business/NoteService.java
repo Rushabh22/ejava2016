@@ -14,14 +14,24 @@ public class NoteService {
     
     @PersistenceContext(unitName="week04PU")
     private EntityManager em;
+    
+    private static final String ALL = "ALL";
           
     public void saveNote(Note note) {
         em.persist(note);        
     }
     
     public List<Object[]> findNotesByCategory(String category) {
-        TypedQuery<Object[]> query = em.createNamedQuery("Note.findNotesByCategory", Object[].class);
-        query.setParameter("category", category);
+        String queryString =  "Note.findNotesByCategory";
+        if(ALL.equalsIgnoreCase(category)){
+            queryString = "Note.findAllNotes";
+        }
+        TypedQuery<Object[]> query = em.createNamedQuery( queryString, Object[].class);
+        if(ALL.equalsIgnoreCase(category)){
+            query.setParameter("category", category);
+        }
+         query.setParameter("category", category); // need to check 
+        
         return query.getResultList();
     }
 }
