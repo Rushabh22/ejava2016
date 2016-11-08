@@ -100,7 +100,7 @@ public class NewUserBean {
 		int count = 0;
 		try {
 			PreparedStatement countQuery = conn.prepareStatement(
-					"SELECT COUNT(*) AS total from users WHERE username = ?");
+					"SELECT COUNT(*) AS total from USERTABLE WHERE USERNAME = ?");
 			countQuery.setString(1, username);
 			ResultSet rs = countQuery.executeQuery();
 			if (rs.next()) {
@@ -134,21 +134,21 @@ public class NewUserBean {
 			conn.setAutoCommit(false);
 
 			PreparedStatement insertUserQuery = conn.prepareStatement(
-					"INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) VALUES (?, ?, ?)");
+					"INSERT INTO USERTABLE(USERNAME, PASSWORD, EMAIL) VALUES (?, ?, ?)");
 			insertUserQuery.setString(1, username);
 			insertUserQuery.setString(2, encryptPassword(password));
 			insertUserQuery.setString(3, email);
 			insertUserQuery.executeUpdate();
 
 			PreparedStatement insertGroupQuery = conn.prepareStatement(
-					"INSERT INTO USER_GROUPS (GROUPNAME, USERNAME) VALUES (?, ?)");
+					"INSERT INTO  GROUPTABLE(GROUPNAME, USERNAME) VALUES (?, ?)");
 			if (usertype.equals("user") || usertype.equals("user+admin")) {
-				insertGroupQuery.setString(1, "user"); // group name
+				insertGroupQuery.setString(1, "studentgroup"); // group name
 				insertGroupQuery.setString(2, username);
 				insertGroupQuery.executeUpdate();
 			}
 			if (usertype.equals("admin") || usertype.equals("user+admin")) {
-				insertGroupQuery.setString(1, "admin"); // group name
+				insertGroupQuery.setString(1, "admingroup"); // group name
 				insertGroupQuery.setString(2, username);
 				insertGroupQuery.executeUpdate();
 			}
