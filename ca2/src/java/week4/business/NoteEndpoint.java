@@ -87,6 +87,6 @@ package week4.business;
      }
  
      public void display(Note note) {
-         message(note.toJson(),note.getCATEGORY());
+         message(note.toJson(),note.getCategory());
      }
  }

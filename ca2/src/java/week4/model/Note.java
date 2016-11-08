@@ -27,25 +27,25 @@ public class Note implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Integer NOTE_ID;
+    private Integer note_id;
 
     private String userid;
 
-    private String TITLE;
+    private String title;
 
-    private String CATEGORY;
+    private String category;
 
-    private String CONTENT;
+    private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date CREATED_DATE;
+    private Date created_date;
 
-    public Integer getNOTE_ID() {
-        return NOTE_ID;
+    public Integer getNote_id() {
+        return note_id;
     }
 
-    public void setNOTE_ID(Integer NOTE_ID) {
-        this.NOTE_ID = NOTE_ID;
+    public void setNote_id(Integer note_id) {
+        this.note_id = note_id;
     }
 
     public String getUserid() {
@@ -57,45 +57,45 @@ public class Note implements Serializable {
     }
 
 
-    public String getTITLE() {
-        return TITLE;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTITLE(String TITLE) {
-        this.TITLE = TITLE;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getCATEGORY() {
-        return CATEGORY;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCATEGORY(String CATEGORY) {
-        this.CATEGORY = CATEGORY;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getCONTENT() {
-        return CONTENT;
+    public String getContent() {
+        return content;
     }
 
-    public void setCONTENT(String CONTENT) {
-        this.CONTENT = CONTENT;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Date getCREATED_DATE() {
-        return CREATED_DATE;
+    public Date getCreated_date() {
+        return created_date;
     }
 
-    public void setCREATED_DATE(Date CREATED_DATE) {
-        this.CREATED_DATE = CREATED_DATE;
+    public void setCreated_date(Date created_date) {
+        this.created_date = created_date;
     }
 
     public String toJson() {
         String msg = Json.createObjectBuilder()
-                .add("title", getTITLE())
-                .add("time", getCREATED_DATE().toString())
+                .add("title", getTitle())
+                .add("time", getCreated_date().toString())
                 .add("who", getUserid())
-                .add("category", getCATEGORY())
-                .add("content", getCONTENT())
+                .add("category", getCategory())
+                .add("content", getContent())
                 .build()
                 .toString();
 

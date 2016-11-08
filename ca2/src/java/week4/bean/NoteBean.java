@@ -58,10 +58,10 @@ public class NoteBean implements Serializable {
     
     public void create() {
         Note note = new Note();
-        note.setCATEGORY(category);
-        note.setCONTENT(content);
-        note.setTITLE(title);
-        note.setCREATED_DATE(new Date());
+        note.setCategory(category);
+        note.setContent(content);
+        note.setTitle(title);
+        note.setCreated_date(new Date());
         note.setUserid(user.getName());
         noteService.saveNote(note);
         noteEndPoint.display(note);
