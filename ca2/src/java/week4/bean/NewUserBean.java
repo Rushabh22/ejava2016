@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 @RequestScoped
 public class NewUserBean {
 
-	@Resource(name = "jdbc/jdbcRealm")
+	@Resource(name = "jdbc/authdb")
 	private DataSource ds;
 
 	@Size(min = 3, max = 50)
