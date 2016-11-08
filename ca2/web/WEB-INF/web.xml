@@ -67,10 +67,5 @@
         <description>Student users</description>
         <role-name>student</role-name>
     </security-role>
-    <resource-ref>
-        <res-ref-name>jdbc/jdbcRealm</res-ref-name>
-        <res-type>javax.sql.ConnectionPoolDataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
+    
 </web-app>
