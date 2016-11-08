@@ -95,6 +95,14 @@ public class NoteEndpoint {
             }
         }
     }
+    
+     public void notifyAllActiveUsers(String category) {
+         String notes = getNotes(category);
+          List<Session> sessions = (List<Session>) sessionMap.get(category);
+           sessions.forEach((s) -> {
+                sendMessage(s, notes);
+            });
+    }
 
     public void display(Note note) {
          message(note.toJson(),note.getCategory());

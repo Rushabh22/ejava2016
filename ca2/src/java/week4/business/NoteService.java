@@ -27,10 +27,9 @@ public class NoteService {
             queryString = "Note.findAllNotes";
         }
         TypedQuery<Object[]> query = em.createNamedQuery( queryString, Object[].class);
-        if(ALL.equalsIgnoreCase(category)){
+        if(!ALL.equalsIgnoreCase(category)){
             query.setParameter("category", category);
         }
-         query.setParameter("category", category); // need to check 
         
         return query.getResultList();
     }
