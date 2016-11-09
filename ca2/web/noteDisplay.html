@@ -35,7 +35,7 @@ and open the template in the editor.
         Category:   <select id="category" onchange="connectWebSocket()">
             <option value="All">All</option>
             <option value="Social">Social</option>
-            <option value="Sale">Sale</option>
+            <option value="Sale">For Sale</option>
             <option value="Jobs">Jobs</option>
             <option value="Tuition">Tuition</option>
             
@@ -69,7 +69,8 @@ and open the template in the editor.
                         var txt = "<tr><th>Title</th><th>Created Time</th><th>Created By</th> <th>Category</th>  <th>Content</th></tr>";
                         if(len > 0){
                             for(var i=0; i<len; i++){
-                                    txt += "<tr><td>"+data[i].title+"</td><td>"+new Date(data[i].time).toLocaleDateString() +"</td>"+
+                                    var date = new Date(data[i].time);
+                                    txt += "<tr><td>"+data[i].title+"</td><td>"+ date.toLocaleDateString() + " "+ date.toLocaleTimeString() +"</td>"+
                                            "<td>"+data[i].who+"</td><td>"+data[i].category+"</td>"+
                                            "<td>"+data[i].content+"</td></tr>";
                                 

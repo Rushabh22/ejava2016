@@ -21,9 +21,9 @@ import javax.persistence.TemporalType;
 
 @NamedQueries({
 @NamedQuery(name = "Note.findNotesByCategory",
-        query = "select n.title, n.created_date, n.userid, n.category, n.content from Note n where n.category = :category"),
+        query = "select n.title, n.created_date, n.userid, n.category, n.content from Note n where n.category = :category order by n.created_date desc"),
 @NamedQuery(name = "Note.findAllNotes",
-        query = "select n.title, n.created_date, n.userid, n.category, n.content from Note n ")
+        query = "select n.title, n.created_date, n.userid, n.category, n.content from Note n order by n.created_date desc")
 })
 @Entity
 @Table(name = "notes")
