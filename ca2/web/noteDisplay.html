@@ -6,14 +6,14 @@ and open the template in the editor.
 -->
 <html>
     <head>
-         <title>Notice Board</title>
+        <title>Notice Board</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">		
 
         <script src="bower_components/jquery/dist/jquery.js"></script>       
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        
+
         <style>
             table, td, th {
                 border: 1px solid black;
@@ -28,69 +28,71 @@ and open the template in the editor.
                 height: 50px;
                 vertical-align: bottom;
             }
-</style>
+        </style>
     </head>
     <body>
-        
-        Category:   <select id="category" onchange="connectWebSocket()">
+
+        Category:   <select id="category"  onchange="connectWebSocket()">
             <option value="All">All</option>
             <option value="Social">Social</option>
             <option value="Sale">For Sale</option>
             <option value="Jobs">Jobs</option>
             <option value="Tuition">Tuition</option>
-            
+
         </select>
-        
-              <br> <br>
-        
-       <table id="table" >
+
+        <br> <br>
+
+        <table id="table" >
         </table>
-        
+
 
         <br>
 
-     
+
         <script>
             $(document).ready(connectWebSocket);
+            
             var socket;
-            function connectWebSocket () {
-                var category = $("#category").val();              
-                var url = "ws://localhost:8080/ca2/note/"+category;
+            function connectWebSocket() {
+              var category = $("#category").val();
+                var url = "ws://localhost:8080/ca2/note/" +category;
+                if(socket){
+                    socket.close();
+                }
                 socket = new WebSocket(url);
                 socket.onopen = function () {
                     $("#notes").val("Connected\n");
-                    
+
                 };
-                socket.onmessage = function (evt) {                   
+              
+                socket.onmessage = function (evt) {
                     var data = JSON.parse(evt.data);
-                    $("#table").empty();    
-                    if(data){
+                    $("#table").empty();
+                    if (data) {
                         var len = data.length;
                         var txt = "<tr><th>Title</th><th>Created Time</th><th>Created By</th> <th>Category</th>  <th>Content</th></tr>";
-                        if(len > 0){
-                            for(var i=0; i<len; i++){
-                                    var date = new Date(data[i].time);
-                                    txt += "<tr><td>"+data[i].title+"</td><td>"+ date.toLocaleDateString() + " "+ date.toLocaleTimeString() +"</td>"+
-                                           "<td>"+data[i].who+"</td><td>"+data[i].category+"</td>"+
-                                           "<td>"+data[i].content+"</td></tr>";
-                                
+                        if (len > 0) {
+                            for (var i = 0; i < len; i++) {
+                                var date = new Date(data[i].time);
+                                txt += "<tr><td>" + data[i].title + "</td><td>" + date.toLocaleDateString() + " " + date.toLocaleTimeString() + "</td>" +
+                                        "<td>" + data[i].who + "</td><td>" + data[i].category + "</td>" +
+                                        "<td>" + data[i].content + "</td></tr>";
+
                             }
-                            if(txt != ""){
+                            if (txt != "") {
                                 $("#table").append(txt);
                             }
                         }
                     }
-                    
+
                 };
-                $("#sendBtn").on("click", function () {                  
-                    socket.send($("#message").val());
-                    $("#message").val("");               
-                });               
-            }  
-            
-            function diconnectClient(){
-           
+               
             }
+            
+           
+
+         
         </script>
     </body>
 </html>

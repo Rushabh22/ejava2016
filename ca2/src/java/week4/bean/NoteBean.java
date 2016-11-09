@@ -5,15 +5,19 @@
  */
 package week4.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import week4.business.NoteService;
 import week4.model.Note;
-import week4.business.NoteEndpoint;
+import week4.web.NoteEndPoint;
+
 
 @ManagedBean(name="noteBean")
 @SessionScoped
@@ -30,7 +34,7 @@ public class NoteBean implements Serializable {
   NoteService noteService;
   
   @Inject
-  private NoteEndpoint noteEndPoint;
+  private NoteEndPoint noteEndPoint;
   
     public String getTitle() {
         return title;
@@ -64,7 +68,17 @@ public class NoteBean implements Serializable {
         note.setCreated_date(new Date());
         note.setUserid(user.getName());
         noteService.saveNote(note);
-        noteEndPoint.display(note);
+        noteEndPoint.notifyAllActiveUsers(note.getCategory());
+        
+          String url = "/noteDisplay.html";
+           FacesContext fc = FacesContext.getCurrentInstance();
+           ExternalContext ec = fc.getExternalContext();
+
+           try {
+                ec.redirect(ec.getApplicationContextPath()+url);
+           }catch (IOException ex) {
+                ex.printStackTrace();
+           }  
     }
       
 }
