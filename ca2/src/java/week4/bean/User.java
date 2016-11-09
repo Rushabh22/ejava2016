@@ -15,12 +15,14 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-      @Inject private Principal principalUser;
+      @Inject private Principal user;
 
     private String name;
 
     public User() {
-        name = principalUser.getName();
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) context.getRequest();
+        name = request.getRemoteUser();
     }
 
     public String getName() {

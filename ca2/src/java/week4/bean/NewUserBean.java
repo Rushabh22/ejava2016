@@ -32,7 +32,7 @@ public class NewUserBean {
 
 	@Pattern(regexp
 			= "[\\w\\.-]*[a-zA-Z0-9_]@[\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]")
-	private String email;
+	private String email ;
 
 	private String usertype;
 
@@ -100,13 +100,14 @@ public class NewUserBean {
 		int count = 0;
 		try {
 			PreparedStatement countQuery = conn.prepareStatement(
-					"SELECT COUNT(*) AS total from USERTABLE WHERE USERNAME = ?");
+					"SELECT COUNT(*) AS total from users WHERE userid = ?");
 			countQuery.setString(1, username);
 			ResultSet rs = countQuery.executeQuery();
 			if (rs.next()) {
 				count = rs.getInt("total");
 			}
 		} catch (SQLException e) {
+                    e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
@@ -134,14 +135,14 @@ public class NewUserBean {
 			conn.setAutoCommit(false);
 
 			PreparedStatement insertUserQuery = conn.prepareStatement(
-					"INSERT INTO USERTABLE(USERNAME, PASSWORD, EMAIL) VALUES (?, ?, ?)");
+					"INSERT INTO users(userid, PASSWORD ) VALUES (?, ? )");
 			insertUserQuery.setString(1, username);
 			insertUserQuery.setString(2, encryptPassword(password));
-			insertUserQuery.setString(3, email);
+		//insertUserQuery.setString(3, email);
 			insertUserQuery.executeUpdate();
 
 			PreparedStatement insertGroupQuery = conn.prepareStatement(
-					"INSERT INTO  GROUPTABLE(GROUPNAME, USERNAME) VALUES (?, ?)");
+					"INSERT INTO  groups(GROUPNAME, userid) VALUES (?, ?)");
 			if (usertype.equals("user") || usertype.equals("user+admin")) {
 				insertGroupQuery.setString(1, "studentgroup"); // group name
 				insertGroupQuery.setString(2, username);
