@@ -62,12 +62,7 @@ public class NoteEndPoint {
 				.build()
 				.toString();
 
-		for (Session s: session.getOpenSessions())
-			try {
-				s.getBasicRemote().sendText(msg);
-			} catch (IOException ex) {
-				try { s.close(); } catch (IOException e) {} 
-			}
+		// specific impl needed to meet requirement
 	}
         
     @OnClose
