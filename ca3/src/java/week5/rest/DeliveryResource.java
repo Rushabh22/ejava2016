@@ -22,9 +22,9 @@ import week5.util.AppConstants;
 /**
  * REST Web Service
  *
- * @author Adya
+ * 
  */
-@Path("items")
+@Path("/")
 public class DeliveryResource {
 
     @EJB
@@ -42,6 +42,7 @@ public class DeliveryResource {
      * @return an Response
      */
     @GET
+    @Path("items")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson() {
         List<Object[]> list = logisticsService.getAllPodItems();
