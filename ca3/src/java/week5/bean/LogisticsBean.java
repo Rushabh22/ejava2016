@@ -8,6 +8,8 @@ package week5.bean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -108,9 +110,13 @@ public class LogisticsBean implements Serializable{
         delivery.setName(name);
         delivery.setAddress(address);
         delivery.setPhone(phone);
-        delivery.setCreate_date(new Date());        
-        delivery.setPod(new Pod());
-        logisticsService.saveDelivery(delivery);
+        delivery.setCreate_date(new Date()); 
+        Pod pod = new Pod();
+//        Random generator = new Random();
+//        pod.setPod_id(generator.nextInt());
+        pod.setPkg(delivery);
+//        delivery.setPod(pod);
+        logisticsService.savePod(pod);
         return null;
     }
     

@@ -20,6 +20,10 @@ public class LogisticsService {
         em.persist(delivery);        
     }
     
+     public void savePod(Pod pod) {
+        em.persist(pod);        
+    }
+    
   public List<Object[]> getAllPodItems() {
         TypedQuery<Object[]> query = em.createNamedQuery("Pod.findItems", Object[].class);
         return query.getResultList();

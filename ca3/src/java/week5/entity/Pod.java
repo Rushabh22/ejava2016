@@ -2,6 +2,7 @@ package week5.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Pod implements Serializable {
 
     private String ack_id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="pkg_id", referencedColumnName="pkg_id")
     private Delivery pkg;
 
