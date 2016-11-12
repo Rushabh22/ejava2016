@@ -18,4 +18,9 @@ public class LogisticsService {
     public void saveDelivery(Delivery note) {
         em.persist(note);        
     }
+    
+  public List<Object[]> getAllPodItems() {
+        TypedQuery<Object[]> query = em.createNamedQuery("Pod.findItems", Object[].class);
+        return query.getResultList();
+    }
 }
