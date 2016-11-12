@@ -6,6 +6,7 @@
 package week5.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -15,28 +16,27 @@ import week5.entity.Delivery;
 import week5.entity.Pod;
 import week5.service.LogisticsService;
 
-
 @Named
 @SessionScoped
-public class LogisticsBean implements Serializable{
-    
+public class LogisticsBean implements Serializable {
+
     @Inject
     LogisticsService logisticsService;
-    
+
     private String name;
-    
+
     private String address;
-    
+
     private String phone;
-    
+
     private String note;
-    
-    private Date created_date;    
-    
+
+    private Date created_date;
+
     private Date delivery_date;
-    
+
     private String ack_id;
-    
+
     private List<LogisticsBean> logisticsBeans;
 
     public LogisticsService getLogisticsService() {
@@ -102,23 +102,34 @@ public class LogisticsBean implements Serializable{
     public void setAck_id(String ack_id) {
         this.ack_id = ack_id;
     }
-    
-    public String submit(){
+
+    public String submit() {
         Delivery delivery = new Delivery();
         delivery.setName(name);
         delivery.setAddress(address);
         delivery.setPhone(phone);
-        delivery.setCreate_date(new Date()); 
+        delivery.setCreate_date(new Date());
         Pod pod = new Pod();
         pod.setPkg(delivery);
         logisticsService.savePod(pod);
         return null;
     }
-    
 
-    public List<LogisticsBean> getLogisticsDetails(){
-        logisticsService.getAllPodItems();
-        return null;
-    }    
+    public List<LogisticsBean> getLogisticsDetails() {
+        logisticsBeans = new ArrayList<>();
+        LogisticsBean logisticsBean = new LogisticsBean();
+        List<Pod> pods = logisticsService.findAllPods();
+        for (Pod pod : pods) {
+            logisticsBean.setName(pod.getPkg().getName());
+            logisticsBean.setAddress(pod.getPkg().getAddress());
+            logisticsBean.setPhone(pod.getPkg().getPhone());
+            logisticsBean.setCreated_date(pod.getPkg().getCreate_date());
+            logisticsBean.setNote(pod.getNote());
+            logisticsBean.setDelivery_date(pod.getDelivery_date());
+            logisticsBean.setAck_id(pod.getAck_id());
+            logisticsBeans.add(logisticsBean);
+        }
+        return logisticsBeans;
+    }
 
 }

@@ -8,61 +8,61 @@
         <title>Display the PODs</title>
     </h:head>
     <h:body>
-       <h:dataTable value="#{logisticsBean.getLogisticsDetails()}" var="c"
-    			styleClass="order-table"
-    			headerClass="order-table-header"
-    			rowClasses="order-table-odd-row,order-table-even-row">
-           <h:column>
-    			<f:facet name="header">
-    			Name	
-    			</f:facet>
-    				#{c.name}
-    		</h:column>
+        <h:dataTable value="#{logisticsBean.getLogisticsDetails()}" var="c"
+                     styleClass="order-table"
+                     headerClass="order-table-header"
+                     rowClasses="order-table-odd-row,order-table-even-row">
+            <h:column>
+                <f:facet name="header">
+                    Name	
+                </f:facet>
+                #{c.name}
+            </h:column>
 
-    		<h:column>
-    			<f:facet name="header">
-    				Address
-				</f:facet>
-    				#{c.address}
-    		</h:column>
+            <h:column>
+                <f:facet name="header">
+                    Address
+                </f:facet>
+                #{c.address}
+            </h:column>
 
- 			<h:column>
-    			<f:facet name="header">
-    				Phone
-				</f:facet>
-    				#{c.phone}
-    		</h:column>
+            <h:column>
+                <f:facet name="header">
+                    Phone
+                </f:facet>
+                #{c.phone}
+            </h:column>
 
-    		<h:column>
-    			<f:facet name="header">
-    				Created Date
-				</f:facet>
-    				#{c.created_date}
-    		</h:column>
-           
-           
-               <h:column>
-    			<f:facet name="header">
-    				Note
-				</f:facet>
-    				#{c.note}
-    		</h:column>
-                
-           
-                <h:column>
-    			<f:facet name="header">
-    				Delivery Date
-				</f:facet>
-    				#{c.delivery_date}
-    		</h:column>
-           
-                <h:column>
-    			<f:facet name="header">
-    				Acknowledgment Message
-				</f:facet>
-    				#{c.ack_id}
-    		</h:column>
-       </h:dataTable>
+            <h:column>
+                <f:facet name="header">
+                    Created Date
+                </f:facet>
+                #{c.created_date}
+            </h:column>
+
+
+            <h:column>
+                <f:facet name="header">
+                    Note
+                </f:facet>
+                #{c.note}
+            </h:column>
+
+
+            <h:column>
+                <f:facet name="header">
+                    Delivery Date
+                </f:facet>
+                #{c.delivery_date}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    Acknowledgment Message
+                </f:facet>
+                #{c.ack_id}
+            </h:column>
+        </h:dataTable>
     </h:body>
 </html>
 
