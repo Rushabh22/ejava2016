@@ -11,4 +11,5 @@ package week5.bean;
  */
 public class LogisticsBean {
     
+    
 }
