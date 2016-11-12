@@ -81,8 +81,8 @@ public class DeliveryResource {
     } 
     
     @GET
-    @Path("callback/{pod_id}/{ack_id}")
-    public void callback(@PathParam("pod_id") Integer pod_id,@PathParam("ack_id") String ack_id){
+    @Path("callback/{podId}/{ackId}")
+    public void callback(@PathParam("podId") Integer pod_id,@PathParam("ackId") String ack_id){
         Pod pod = logisticsService.findPod(pod_id);
         pod.setAck_id(ack_id);
         logisticsService.savePod(pod);
