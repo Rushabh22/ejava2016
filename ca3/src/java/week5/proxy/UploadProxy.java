@@ -65,7 +65,6 @@ public class UploadProxy extends HttpServlet {
 
 		Response callResp = inv.post(Entity.entity(formData, formData.getMediaType()));
                 System.out.println("After involing the Post");
-		System.out.println(">> call resp:" + callResp.getStatus());
 	}
         
         protected byte[] readImage(String pod) {
