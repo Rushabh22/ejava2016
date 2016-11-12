@@ -34,4 +34,8 @@ public class LogisticsService {
        TypedQuery<Pod> query = em.createNamedQuery("Pod.findPods",Pod.class);
        return query.getResultList();
   }
+  
+  public Pod findPod(Integer id){
+      return em.find(Pod.class, id);
+  }
 }
