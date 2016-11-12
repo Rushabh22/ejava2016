@@ -17,11 +17,13 @@ import javax.persistence.TemporalType;
 
 
 @NamedQueries({
-	@NamedQuery(name = "Pod.findItems", query = "SELECT p.pod_id, d.address, d.name, d.phone from Pod p inner join p.pkg d ")
+	@NamedQuery(name = "Pod.findItems", query = "SELECT p.pod_id, d.address, d.name, d.phone from Pod p inner join p.pkg d "),
+        @NamedQuery(name = "Pod.findPods",query = "SELECT p from Pod p")
 })
 @Entity
 public class Pod implements Serializable {
 
+    private static final long serialVersionUID = 1l;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Integer pod_id;
@@ -89,4 +91,10 @@ public class Pod implements Serializable {
         this.ack_id = ack_id;
     }
 
+    @Override
+    public String toString() {
+        return "Pod{" + "pod_id=" + pod_id + ", note=" + note + ", image=" + image + ", delivery_date=" + delivery_date + ", ack_id=" + ack_id + ", pkg=" + pkg + '}';
+    }
+
+    
 }

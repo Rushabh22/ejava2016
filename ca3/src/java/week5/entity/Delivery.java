@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +22,9 @@ import javax.persistence.TemporalType;
  * @author user
  */
 @Entity
+@NamedQuery(name = "findAllDeliveries",query="SELECT e from Delivery e")
 public class Delivery implements Serializable {
+    private static final long serialVersionUID = 1l;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Integer pkg_id;
@@ -84,6 +87,11 @@ public class Delivery implements Serializable {
 
     public void setPod(Pod pod) {
         this.pod = pod;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery{" + "pkg_id=" + pkg_id + ", name=" + name + ", address=" + address + ", phone=" + phone + ", pod=" + pod + ", create_date=" + create_date + '}';
     }
     
     
