@@ -116,10 +116,10 @@ public class LogisticsBean implements Serializable {
     }
 
     public List<LogisticsBean> getLogisticsDetails() {
-        logisticsBeans = new ArrayList<>();
-        LogisticsBean logisticsBean = new LogisticsBean();
+        logisticsBeans = new ArrayList<>();       
         List<Pod> pods = logisticsService.findAllPods();
         for (Pod pod : pods) {
+            LogisticsBean logisticsBean = new LogisticsBean();
             logisticsBean.setName(pod.getPkg().getName());
             logisticsBean.setAddress(pod.getPkg().getAddress());
             logisticsBean.setPhone(pod.getPkg().getPhone());
