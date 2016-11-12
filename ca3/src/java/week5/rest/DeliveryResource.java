@@ -5,7 +5,13 @@
  */
 package week5.rest;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -13,10 +19,13 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import week5.entity.Pod;
 import week5.service.LogisticsService;
 import week5.util.AppConstants;
@@ -24,7 +33,7 @@ import week5.util.AppConstants;
 /**
  * REST Web Service
  *
- * 
+ *
  */
 @Path("/")
 public class DeliveryResource {
@@ -78,17 +87,52 @@ public class DeliveryResource {
         JsonArray jsnArray = jsnArrBuilder.build();
         System.out.println(jsnArray);
         return (javax.ws.rs.core.Response.ok(jsnArray)).build();
-    } 
-    
+    }
+
     @GET
     @Path("callback")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response callback(@QueryParam("podId") Integer pod_id,@QueryParam("ackId") String ack_id){
+    public Response callback(@QueryParam("podId") Integer pod_id, @QueryParam("ackId") String ack_id) {
         Pod pod = logisticsService.findPod(pod_id);
         System.out.println(pod.getPod_id());
         pod.setAck_id(ack_id);
         logisticsService.savePod(pod);
         return (Response.status(Response.Status.OK).build());
-    }   
-  
+    }
+
+    @POST
+    @Path("upload")
+    @Produces(MediaType.MULTIPART_FORM_DATA)
+    public Response upload(
+            @FormDataParam("podId") Integer podId,
+            @FormDataParam("note") String note,
+            @FormDataParam("image") InputStream inputStream,
+            @FormDataParam("time") Long time) {
+
+        System.out.print("note >>> " + note);
+
+        try {
+            Pod pod = new Pod();
+            pod.setNote(note);
+            pod.setPod_id(podId);
+            pod.setDelivery_date(new Date(time));
+            pod.setImage(readFully(inputStream));
+            logisticsService.updatePod(pod);
+        } catch (IOException ex) {
+            Logger.getLogger(DeliveryResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //  logisticsService.savePod(pod);
+        return (Response.status(Response.Status.OK).build());
+    }
+
+    public byte[] readFully(InputStream input) throws IOException {
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        while ((bytesRead = input.read(buffer)) != -1) {
+            output.write(buffer, 0, bytesRead);
+        }
+        return output.toByteArray();
+    }
+
 }
