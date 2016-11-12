@@ -2,6 +2,7 @@ package week5.proxy;
 
 import java.io.File;
 import java.io.IOException;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +21,14 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
+import week5.entity.Pod;
+import week5.service.LogisticsService;
 
 @WebServlet("/upload-proxy")
 public class UploadProxy extends HttpServlet {
 
+        @Inject
+        LogisticsService logicService;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
@@ -31,21 +36,20 @@ public class UploadProxy extends HttpServlet {
 				.register(MultiPartFeature.class)
 				.build();
 
+                String teamId=req.getParameter("teamId");
+                String podId=req.getParameter("podId");
+                String note=req.getParameter("note");
 		MultiPart part = new MultiPart();
 
-		FileDataBodyPart imgPart = new FileDataBodyPart("image", 
-				new File("/Users/ankur.jain/Downloads/ankur.png"),
-				MediaType.APPLICATION_OCTET_STREAM_TYPE);
-		imgPart.setContentDisposition(
-				FormDataContentDisposition.name("image")
-				.fileName("ankur.png").build());
-
+		
+               byte[] image = readImage(podId);
+               
 		MultiPart formData = new FormDataMultiPart()
-                                .field("teamId","f178b3ba",MediaType.TEXT_PLAIN_TYPE)
-				.field("podId", "abc123", MediaType.TEXT_PLAIN_TYPE)
+                                .field("teamId",teamId,MediaType.TEXT_PLAIN_TYPE)
+				.field("podId", podId, MediaType.TEXT_PLAIN_TYPE)
                                 .field("callback","http://10.10.24.140/ca3/callback",MediaType.TEXT_PLAIN_TYPE)
-				.field("note", "a message", MediaType.TEXT_PLAIN_TYPE)
-				.bodyPart(imgPart);
+				.field("note", note, MediaType.TEXT_PLAIN_TYPE)
+				.field("image", image, MediaType.MULTIPART_FORM_DATA_TYPE);
 		formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
 
 
@@ -61,6 +65,13 @@ public class UploadProxy extends HttpServlet {
                 System.out.println("After involing the Post");
 		System.out.println(">> call resp:" + callResp.getStatus());
 	}
+        
+        protected byte[] readImage(String pod) {
+            Integer podId = Integer.valueOf(pod);
+            Pod pod_image = logicService.findPod(podId);
+            byte[] image = pod_image.getImage();
+            return image;
+        }
 
 	
 	
