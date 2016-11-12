@@ -21,7 +21,7 @@ import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
-@WebServlet("/upload")
+@WebServlet("/upload-proxy")
 public class UploadProxy extends HttpServlet {
 
 	@Override
