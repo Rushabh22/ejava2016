@@ -36,8 +36,18 @@ public class LogisticsBean implements Serializable {
     private Date delivery_date;
 
     private String ack_id;
+    
+    private Integer pkg_id;
 
     private List<LogisticsBean> logisticsBeans;
+
+    public Integer getPkg_id() {
+        return pkg_id;
+    }
+
+    public void setPkg_id(Integer pkg_id) {
+        this.pkg_id = pkg_id;
+    }
 
     public LogisticsService getLogisticsService() {
         return logisticsService;
@@ -120,6 +130,7 @@ public class LogisticsBean implements Serializable {
         List<Pod> pods = logisticsService.findAllPods();
         for (Pod pod : pods) {
             LogisticsBean logisticsBean = new LogisticsBean();
+            logisticsBean.setPkg_id(pod.getPkg().getPkg_id());
             logisticsBean.setName(pod.getPkg().getName());
             logisticsBean.setAddress(pod.getPkg().getAddress());
             logisticsBean.setPhone(pod.getPkg().getPhone());
