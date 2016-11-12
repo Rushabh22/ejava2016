@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,6 +22,7 @@ import javax.persistence.TemporalType;
  * @author user
  */
 @Entity
+@Table(name="delivery")
 public class Delivery implements Serializable {
     private static final long serialVersionUID = 1l;
     @Id

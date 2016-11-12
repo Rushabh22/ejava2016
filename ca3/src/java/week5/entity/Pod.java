@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,6 +22,7 @@ import javax.persistence.TemporalType;
         @NamedQuery(name = "Pod.findPods",query = "SELECT p from Pod p")
 })
 @Entity
+@Table(name="pod")
 public class Pod implements Serializable {
 
     private static final long serialVersionUID = 1l;

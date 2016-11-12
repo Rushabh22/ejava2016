@@ -12,6 +12,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import week5.entity.Delivery;
+import week5.entity.Pod;
 import week5.service.LogisticsService;
 
 
@@ -108,6 +109,7 @@ public class LogisticsBean implements Serializable{
         delivery.setAddress(address);
         delivery.setPhone(phone);
         delivery.setCreate_date(new Date());        
+        delivery.setPod(new Pod());
         logisticsService.saveDelivery(delivery);
         return null;
     }
