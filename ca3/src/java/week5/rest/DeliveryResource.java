@@ -97,7 +97,7 @@ public class DeliveryResource {
         Pod pod = logisticsService.findPod(pod_id);
         System.out.println(pod.getPod_id());
         pod.setAck_id(ack_id);
-        logisticsService.savePod(pod);
+        logisticsService.updatePod(pod);
         return (Response.status(Response.Status.OK).build());
     }
 
