@@ -9,22 +9,21 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author user
- */
+
+@NamedQueries({
+	@NamedQuery(name = "Pod.findItems", query = "SELECT p.pod_id, d.address, d.name, d.phone from Pod p inner join p.pkg d "),
+        @NamedQuery(name = "Pod.findPods",query = "SELECT p from Pod p")
+})
 @Entity
 public class Pod implements Serializable {
 
+    private static final long serialVersionUID = 1l;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Integer pod_id;
@@ -92,4 +91,10 @@ public class Pod implements Serializable {
         this.ack_id = ack_id;
     }
 
+    @Override
+    public String toString() {
+        return "Pod{" + "pod_id=" + pod_id + ", note=" + note + ", image=" + image + ", delivery_date=" + delivery_date + ", ack_id=" + ack_id + ", pkg=" + pkg + '}';
+    }
+
+    
 }

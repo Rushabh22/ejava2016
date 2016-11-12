@@ -14,32 +14,29 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import week5.service.LogisticsService;
 import week5.util.AppConstants;
 
 
 @RequestScoped
 public class DeliveryItemResource {
-
+    
+    @EJB LogisticsService logisticsService;
 
     @GET
     @Path("/items")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAppointments() {
-
-        List<Object[]> list =  new ArrayList<>(); //peopleBean.findAppointments(email);
+    public Response findItems() {
+        List<Object[]> list =  logisticsService.getAllPodItems();
         System.out.println("Get delievery details .. >> ");
         JsonArrayBuilder jsnArrBuilder = Json.createArrayBuilder();
              
         list.stream().map((record) -> {
-       //     Integer podId = (Integer) record[0];
-        //    String address = (String) record[1];
-         //   String name = (String) record[2];
-          //  String phone = (String) record[3];
+            Integer podId = (Integer) record[0];
+            String address = (String) record[1];
+            String name = (String) record[2];
+            String phone = (String) record[3];
             
-            Integer podId = 111;
-            String address = "The Luxurie";
-            String name = "amar";
-            String phone = "94659939";
             System.out.println("***************************************");
             System.out.println("podId >> " + podId);
             System.out.println("address >> " + address);
