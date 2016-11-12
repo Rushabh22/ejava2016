@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import week5.entity.Pod;
@@ -81,11 +82,14 @@ public class DeliveryResource {
     } 
     
     @GET
-    @Path("callback/{podId}/{ackId}")
-    public void callback(@PathParam("podId") Integer pod_id,@PathParam("ackId") String ack_id){
+    @Path("callback")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response callback(@QueryParam("podId") Integer pod_id,@QueryParam("ackId") String ack_id){
         Pod pod = logisticsService.findPod(pod_id);
+        System.out.println(pod.getPod_id());
         pod.setAck_id(ack_id);
         logisticsService.savePod(pod);
+        return (Response.status(Response.Status.OK).build());
     }   
   
 }
