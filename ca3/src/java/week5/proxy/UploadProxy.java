@@ -34,16 +34,17 @@ public class UploadProxy extends HttpServlet {
 		MultiPart part = new MultiPart();
 
 		FileDataBodyPart imgPart = new FileDataBodyPart("image", 
-				new File("/home/cmlee/Pictures/ca3.png"),
+				new File("/Users/ankur.jain/Downloads/ankur.png"),
 				MediaType.APPLICATION_OCTET_STREAM_TYPE);
 		imgPart.setContentDisposition(
 				FormDataContentDisposition.name("image")
-				.fileName("ca3.png").build());
+				.fileName("ankur.png").build());
 
 		MultiPart formData = new FormDataMultiPart()
-				.field("epodId", "abc123", MediaType.TEXT_PLAIN_TYPE)
+                                .field("teamId","f178b3ba",MediaType.TEXT_PLAIN_TYPE)
+				.field("podId", "abc123", MediaType.TEXT_PLAIN_TYPE)
+                                .field("callback","http://10.10.24.140/ca3/callback",MediaType.TEXT_PLAIN_TYPE)
 				.field("note", "a message", MediaType.TEXT_PLAIN_TYPE)
-				.field("time", Long.toString(System.currentTimeMillis()), MediaType.TEXT_PLAIN_TYPE)
 				.bodyPart(imgPart);
 		formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
 
@@ -53,11 +54,11 @@ public class UploadProxy extends HttpServlet {
 				
 		WebTarget target = client.target("http://10.10.0.48:8080/epod/upload");
 		Invocation.Builder inv = target.request();
-
+                System.out.println("I am here, going to upload  now");
 		System.out.println(">>> part: " + formData);
 
 		Response callResp = inv.post(Entity.entity(formData, formData.getMediaType()));
-
+                System.out.println("After involing the Post");
 		System.out.println(">> call resp:" + callResp.getStatus());
 	}
 
