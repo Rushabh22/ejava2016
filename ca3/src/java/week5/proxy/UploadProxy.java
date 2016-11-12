@@ -1,6 +1,8 @@
 package week5.proxy;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -36,20 +38,20 @@ public class UploadProxy extends HttpServlet {
 				.register(MultiPartFeature.class)
 				.build();
 
-                String teamId=req.getParameter("teamId");
-                String podId=req.getParameter("podId");
-                String note=req.getParameter("note");
+                String teamId="f178b3ba";//req.getParameter("teamId");
+                String podId="1";//req.getParameter("podId");
+                String note="message1";//req.getParameter("note");
 		MultiPart part = new MultiPart();
 
 		
                byte[] image = readImage(podId);
                
-		MultiPart formData = new FormDataMultiPart()
+               MultiPart formData = new FormDataMultiPart()
                                 .field("teamId",teamId,MediaType.TEXT_PLAIN_TYPE)
 				.field("podId", podId, MediaType.TEXT_PLAIN_TYPE)
                                 .field("callback","http://10.10.24.140/ca3/callback",MediaType.TEXT_PLAIN_TYPE)
 				.field("note", note, MediaType.TEXT_PLAIN_TYPE)
-				.field("image", image, MediaType.MULTIPART_FORM_DATA_TYPE);
+                        .field("image",image,MediaType.APPLICATION_OCTET_STREAM_TYPE);
 		formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
 
 
