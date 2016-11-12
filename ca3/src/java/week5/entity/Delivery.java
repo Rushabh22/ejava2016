@@ -22,7 +22,6 @@ import javax.persistence.TemporalType;
  * @author user
  */
 @Entity
-@NamedQuery(name = "findAllDeliveries",query="SELECT e from Delivery e")
 public class Delivery implements Serializable {
     private static final long serialVersionUID = 1l;
     @Id
