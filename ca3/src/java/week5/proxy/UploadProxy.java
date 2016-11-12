@@ -49,7 +49,7 @@ public class UploadProxy extends HttpServlet {
                MultiPart formData = new FormDataMultiPart()
                                 .field("teamId",teamId,MediaType.TEXT_PLAIN_TYPE)
 				.field("podId", podId, MediaType.TEXT_PLAIN_TYPE)
-                                .field("callback","http://10.10.24.140/ca3/callback",MediaType.TEXT_PLAIN_TYPE)
+                                .field("callback","http://10.10.3.186/ca3/api/callback",MediaType.TEXT_PLAIN_TYPE)
 				.field("note", note, MediaType.TEXT_PLAIN_TYPE)
                         .field("image",image,MediaType.APPLICATION_OCTET_STREAM_TYPE);
 		formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);

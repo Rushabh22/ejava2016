@@ -66,13 +66,11 @@ public class FileUploadServlet extends HttpServlet {
         MultiPart formData = new FormDataMultiPart()
                 .field("teamId", AppConstants.TEAM_ID, MediaType.TEXT_PLAIN_TYPE)
                 .field("podId", podId, MediaType.TEXT_PLAIN_TYPE)
-                .field("callback", "http://10.10.3.186/ca3/callback", MediaType.TEXT_PLAIN_TYPE)
+                .field("callback", "http://10.10.3.186/ca3/api/callback", MediaType.TEXT_PLAIN_TYPE)
                 .field("note", note, MediaType.TEXT_PLAIN_TYPE)
                 .field("image", image, MediaType.APPLICATION_OCTET_STREAM_TYPE);
         formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
 
-        //part.bodyPart(new FileDataBodyPart("image", 
-        //new File("/home/cmlee/Pictures/ca3.png")));
         Response callResp = null;
         do {
             WebTarget target = client.target("http://10.10.0.48:8080/epod/upload");
