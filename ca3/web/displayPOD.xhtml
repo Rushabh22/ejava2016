@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:head>
+        <title>Display the PODs</title>
+    </h:head>
+    <h:body>
+       <h:dataTable value="#{logisticsBean.getLogisticsDetails()}" var="c"
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row">
+           <h:column>
+    			<f:facet name="header">
+    			Name	
+    			</f:facet>
+    				#{c.name}
+    		</h:column>
+
+    		<h:column>
+    			<f:facet name="header">
+    				Address
+				</f:facet>
+    				#{c.address}
+    		</h:column>
+
+ 			<h:column>
+    			<f:facet name="header">
+    				Phone
+				</f:facet>
+    				#{c.phone}
+    		</h:column>
+
+    		<h:column>
+    			<f:facet name="header">
+    				Created Date
+				</f:facet>
+    				#{c.created_date}
+    		</h:column>
+           
+           
+               <h:column>
+    			<f:facet name="header">
+    				Note
+				</f:facet>
+    				#{c.note}
+    		</h:column>
+                
+           
+                <h:column>
+    			<f:facet name="header">
+    				Delivery Date
+				</f:facet>
+    				#{c.delivery_date}
+    		</h:column>
+           
+                <h:column>
+    			<f:facet name="header">
+    				Acknowledgment Message
+				</f:facet>
+    				#{c.ack_id}
+    		</h:column>
+       </h:dataTable>
+    </h:body>
+</html>
+

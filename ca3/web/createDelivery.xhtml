@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+       
+    </h:head>
+    <h:body>
+        <h1>Create Delivery</h1>
+        <h:form>
+            Name : <h:inputText value="#{logisticsBean.name}"/><br/>
+            Address : <h:inputText value="#{logisticsBean.address}"/><br/>
+            Phone Number: <h:inputText value="#{logisticsBean.phoneNumber}"/><br/>
+            <h:commandButton value="Submit Delivery" action="#{logisticsBean.submit}"/>
+            <h:link value="Go to Menu" outcome="/index"/> 
+         </h:form>
+    </h:body>
+</html>
+
