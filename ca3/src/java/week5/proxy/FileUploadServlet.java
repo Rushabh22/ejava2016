@@ -72,20 +72,28 @@ public class FileUploadServlet extends HttpServlet {
         formData.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
 
         Response callResp = null;
-        do {
+        boolean status = false;
+
             WebTarget target = client.target("http://10.10.0.48:8080/epod/upload");
             Invocation.Builder inv = target.request();
             System.out.println("I am here, going to upload  now");
             System.out.println(">>> part: " + formData);
+            boolean callStatus = false;    
+            do {
+                callResp = inv.post(Entity.entity(formData, formData.getMediaType()));
+                System.out.println("After involing the Post >>> resp code >> " + callResp.getStatus());
+            
+                try {
+                    Thread.currentThread().sleep(2000);
+                    Pod udatedPod = logisticsService.findPod(podId);
+                    if(udatedPod.getAck_id() !=  null ){
+                        callStatus = true;
+                    }
 
-            callResp = inv.post(Entity.entity(formData, formData.getMediaType()));
-            System.out.println("After involing the Post >>> resp code >> " + callResp.getStatus());
-            try {
-                Thread.currentThread().sleep(25000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FileUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } while (callResp.getStatus() != 200);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FileUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } while (callStatus);
 
     }
 

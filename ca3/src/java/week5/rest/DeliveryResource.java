@@ -5,6 +5,7 @@
  */
 package week5.rest;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +18,8 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
@@ -99,6 +102,36 @@ public class DeliveryResource {
         pod.setAck_id(ack_id);
         logisticsService.updatePod(pod);
         return (Response.status(Response.Status.OK).build());
+    }
+    
+    @POST
+    @Path("upload")
+    @Produces(MediaType.MULTIPART_FORM_DATA)
+    public Response upload( @FormDataParam("podId") Integer podId, @FormDataParam("note") String note,
+            @FormDataParam("time") Long time, @FormDataParam("image") InputStream image) throws IOException {
+      
+        byte[] imageByte = toBytes(image);
+        Pod pod = logisticsService.findPod(podId);
+        pod.setNote(note);
+        pod.setPod_id(podId);
+        pod.setDelivery_date(new Date(time));
+        pod.setImage(imageByte);
+        logisticsService.updatePod(pod);
+        return (Response.status(Response.Status.OK).build());
+    }
+    
+     private byte[] toBytes(InputStream is) throws IOException {
+        byte[] buffer = new byte[1024 * 8];
+        int size = 0;
+            BufferedInputStream bis = new BufferedInputStream(is);
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                while (-1 != (size = bis.read(buffer))) {
+                    baos.write(buffer, 0, size);
+                }
+                buffer = baos.toByteArray();
+            }
+     
+        return buffer;
     }
 
 }
